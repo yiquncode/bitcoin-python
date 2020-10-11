@@ -35,6 +35,15 @@ class TestBlock(unittest.TestCase):
     def test_verify_malicious_transation(self):
         self.transaction.outputs[0]['amount'] = 66
         self.assertFalse(Transaction.verify_transaction(self.transaction))
+    
+    def test_insert_new_output(self):
+        next_amount = 20
+        next_recipient = 'next09ow99'
+        self.transaction = self.transaction.insert_output(self.wallet, next_recipient, next_amount)
+
+        for output in self.transaction.outputs: 
+            if output['address'] == next_recipient:
+                self.assertEqual(output['amount'], next_amount)
 
 
 if __name__ == '__main__':
