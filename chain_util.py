@@ -10,7 +10,7 @@ class ChainUtil:
 
     @staticmethod
     def id():
-        return uuid.uuid1()
+        return str(uuid.uuid1())
 
     @staticmethod
     def to_hash(data):

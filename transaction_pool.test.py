@@ -22,5 +22,9 @@ class TestTransactionPool(unittest.TestCase):
         
         self.assertNotEqual(old, str(self.tp.transactions[0].__dict__))
 
+    def test_json_encode(self):
+        print(self.tp.to_json())
+
+
 if __name__ == '__main__':
     unittest.main()

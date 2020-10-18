@@ -1,3 +1,6 @@
+import json
+import base64
+
 class TransactionPool:
 
     def __init__(self):
@@ -21,4 +24,11 @@ class TransactionPool:
                 return t
             else:
                 return None
+    
+    def to_json(self):
+        for ob in self.transactions:
+            encoded = base64.b64encode(ob.input['signature'])
+            ob.input['signature'] = encoded.decode('ascii')
+            # decoded = base64.b64decode(ob.input['signature'])
+            return json.dumps(ob.__dict__)
                  
