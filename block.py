@@ -44,7 +44,11 @@ class Block:
     
     @staticmethod
     def create_block_hash(block):
-        return Block.create_hash(block.timestamp, block.prev_hash, block.data, block.nonce, block.difficulty)
+        if type(block) is Block:
+            return Block.create_hash(block.timestamp, block.prev_hash, block.data, block.nonce, block.difficulty)
+        
+        if type(block) is dict:
+            return Block.create_hash(block['timestamp'], block['prev_hash'], block['data'], block['nonce'], block['difficulty'])
     
     @staticmethod
     def addjust_difficulty(prev_block, current_time):

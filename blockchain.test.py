@@ -20,29 +20,42 @@ class TestBlockchain(unittest.TestCase):
     def test_validates_a_valid_chain(self):
         self.bc2.add_block('foo')
         self.assertTrue(self.bc.is_vaild_chain(self.bc2.chain))
+        self.assertTrue(self.bc.is_vaild_chain_from_json(self.bc2.to_json()))
 
     def test_bad_genesis_block_is_invalid(self):
         self.bc2.chain[0].data = 'bad data'
 
         self.assertFalse(self.bc.is_vaild_chain(self.bc2.chain))
+        self.assertFalse(self.bc.is_vaild_chain_from_json(self.bc2.to_json()))
     
     def test_bad_block_is_invalid(self):
         self.bc2.add_block('foo')
         self.bc2.chain[1].data = 'bad data'
 
         self.assertFalse(self.bc.is_vaild_chain(self.bc2.chain))
+        self.assertFalse(self.bc.is_vaild_chain_from_json(self.bc2.to_json()))
     
     def test_replace_the_chain_with_a_valid_chain(self):
         self.bc2.add_block('bar')
         self.bc.replace_chain(self.bc2.chain)
-
         self.assertEqual(self.bc.chain, self.bc2.chain)
     
+    def test_replace_the_chain_with_a_valid_chain_json(self):
+        self.bc2.add_block('bar')
+        self.bc.replace_chain_from_json(self.bc2.to_json())
+        self.assertEqual(self.bc.to_json(), self.bc2.to_json())
+
     def test_not_replace_with_less_chain(self):
         self.bc.add_block('foo')
         self.bc.replace_chain(self.bc2.chain)
 
         self.assertNotEqual(self.bc.chain, self.bc2.chain)
+    
+    def test_not_replace_with_less_chain_json(self):
+        self.bc.add_block('foo')
+        self.bc.replace_chain_from_json(self.bc2.to_json())
+
+        self.assertNotEqual(self.bc.to_json(), self.bc2.to_json())
 
 if __name__ == '__main__':
     unittest.main()
