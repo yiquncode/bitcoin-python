@@ -1,3 +1,4 @@
 flask
 websockets
 ecdsa
+p2pnetwork
